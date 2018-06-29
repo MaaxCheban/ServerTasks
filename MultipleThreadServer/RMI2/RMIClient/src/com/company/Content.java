@@ -23,7 +23,6 @@ public class Content extends JPanel {
     private JTextField portField;
     private JTextField hostField;
     private JButton sendButton;
-    private boolean isRegistryDown;
 
     private Content(ContentBuilder builder) {
         super(builder.layout == null ? new FlowLayout() : builder.layout);
@@ -41,7 +40,6 @@ public class Content extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-
                 Registry registry = LocateRegistry.getRegistry(hostField.getText(), Integer.parseInt(portField.getText()));
                 RemoteFileWriter stub = (RemoteFileWriter) registry.lookup("RemoteFileWriter");
                 stub.write(textField.getText());

@@ -48,7 +48,7 @@ public class Server implements RemoteFileWriter {
     }
 
     public void start(int registryPort, int remoteObjectConnectionPort){
-            try{
+        try{
 
             RemoteFileWriter stub = (RemoteFileWriter) UnicastRemoteObject.exportObject(this, remoteObjectConnectionPort);
 
