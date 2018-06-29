@@ -1,171 +1,138 @@
 package com.epam.swing;
 
+import net.miginfocom.swing.MigLayout;
+
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.Socket;
-import java.net.UnknownHostException;
+
 
 public class Content extends JPanel {
+    private static final int PORT_COLUMNS = 10;
+    private static final int HOST_COLUMNS = 15;
+    private static final int TEXTAREA_COLUMNS = 30;
+    private static final int TEXTAREA_ROWS = 5;
     private JLabel inputTextLabel;
     private JLabel inputPortLabel;
     private JLabel inputHostLabel;
     private JLabel statusLabel;
-    private JTextField textField;
+    private JTextArea textArea;
     private JTextField portField;
     private JTextField hostField;
     private JButton sendButton;
 
     private Content(ContentBuilder builder) {
-        super(builder.layout == null ? new FlowLayout() : builder.layout);
-        statusLabel = new JLabel("Status: ");
+        super(new MigLayout());
+        statusLabel = builder.statusLabel;
         inputTextLabel = builder.inputTextLabel;
         inputPortLabel = builder.inputPortLabel;
         inputHostLabel = builder.inputHostLabel;
-        textField = builder.textField;
+        textArea = builder.textArea;
         portField = builder.portField;
         hostField = builder.hostField;
         sendButton = builder.sendButton;
     }
 
-    public class ConnectButtonActionListener implements ActionListener {
+    private class ConnectButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
-            try (Socket socket = new Socket(hostField.getText(), Integer.parseInt(portField.getText()))) {
-                statusLabel.setText("Status: Connected");
-                try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))) {
-                    statusLabel.setText("Status: Sending line to the server");
-                    out.write(textField.getText() + "\r\n");
-                    statusLabel.setText("Status: Text was succesfully sent");
-                    out.flush();
-                }
-
-            } catch (UnknownHostException ex) {
-                statusLabel.setText("Status: unknown host");
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                statusLabel.setText("Status: check text u have input again");
-                ex.printStackTrace();
-            } catch (IllegalArgumentException ex) {
-                statusLabel.setText("Status: wrong host or port");
-                ex.printStackTrace();
-            }
-
-            textField.setText("");
+            TextWriterWorker worker = new TextWriterWorker(statusLabel, textArea, portField, hostField);
+            worker.execute();
         }
     }
 
 
     public void init() {
-
         sendButton.addActionListener(new ConnectButtonActionListener());
-        if (inputTextLabel != null && textField != null) {
-            this.add(inputTextLabel);
-            this.add(textField);
-        }
-        if (inputPortLabel != null && portField != null) {
-            this.add(inputPortLabel);
-            this.add(portField);
-        }
-        if (inputHostLabel != null && hostField != null) {
-            this.add(inputHostLabel);
-            this.add(hostField);
-        }
-        if (sendButton != null) {
-            this.add(sendButton);
-        }
-        this.add(statusLabel);
-
+        this.add(inputTextLabel);
+        this.add(textArea, "wrap");
+        this.add(inputPortLabel);
+        this.add(portField, "split 3");
+        this.add(inputHostLabel, "gapleft 30");
+        this.add(hostField, "wrap");
+        this.add(sendButton, "wrap");
+        this.add(statusLabel, "span 3");
     }
 
     public static class ContentBuilder {
-        private JLabel inputTextLabel;
-        private JLabel inputPortLabel;
-        private JLabel inputHostLabel;
-        private JTextField textField;
-        private JTextField portField;
-        private JTextField hostField;
-        private JButton sendButton;
-        private LayoutManager layout;
+        private JLabel inputTextLabel = new JLabel("Input your text:");
+        private JLabel inputPortLabel = new JLabel("Specify port:");
+        private JLabel inputHostLabel = new JLabel("Specify Host:");
+        private JTextArea textArea = new JTextArea(TEXTAREA_ROWS, TEXTAREA_COLUMNS);
+        private JTextField portField = new JTextField("8080", PORT_COLUMNS);
+        private JTextField hostField = new JTextField("127.0.0.1", HOST_COLUMNS);
+        private JButton sendButton = new JButton("Send");
+        private JLabel statusLabel = new JLabel("Status: ");
 
-        public ContentBuilder setInputTextLabel(JLabel inputTextLabel) {
-            this.inputTextLabel = inputTextLabel;
+        public ContentBuilder setInputTextLabel(String inputTextLabel) {
+            this.inputTextLabel.setText(inputTextLabel);
             return this;
         }
 
-        public ContentBuilder setInputPortLabel(JLabel inputPortLabel) {
-            this.inputPortLabel = inputPortLabel;
-            return this;
-
-        }
-
-        public ContentBuilder setInputHostLabel(JLabel inputHostLabel) {
-            this.inputHostLabel = inputHostLabel;
+        public ContentBuilder setInputPortLabel(String inputPortLabel) {
+            this.inputPortLabel.setText(inputPortLabel);
             return this;
         }
 
-        public ContentBuilder setTextField(JTextField textField) {
-            this.textField = textField;
+        public ContentBuilder setInputHostLabel(String inputHostLabel) {
+            this.inputHostLabel.setText(inputHostLabel);
             return this;
         }
 
-        public ContentBuilder setPortField(JTextField portField) {
-            this.portField = portField;
+        public ContentBuilder setTextField(String textArea) {
+            this.textArea.setToolTipText(textArea);
             return this;
         }
 
-        public ContentBuilder setHostField(JTextField hostField) {
-            this.hostField = hostField;
+        public ContentBuilder setPortField(String portFieldText) {
+            this.portField.setText(portFieldText);
             return this;
         }
 
-
-        public ContentBuilder setSendButton(JButton sendButton) {
-            this.sendButton = sendButton;
+        public ContentBuilder setHostField(String hostFieldText) {
+            this.hostField.setText(hostFieldText);
             return this;
         }
 
-        public ContentBuilder setLayoutManager(LayoutManager layout) {
-            this.layout = layout;
+        public ContentBuilder setSendButton(String sendButtonText) {
+            this.sendButton.setText(sendButtonText);
             return this;
         }
-
 
         public Content build() {
             return new Content(this);
         }
     }
 
-    public JLabel getInputTextLabel() {
-        return inputTextLabel;
+    public String getInputTextLabelText() {
+        return inputTextLabel.getText();
     }
 
-    public JLabel getInputPortLabel() {
-        return inputPortLabel;
+    public String getInputPortLabelText() {
+        return inputPortLabel.getText();
     }
 
-    public JLabel getInputHostLabel() {
-        return inputHostLabel;
+    public String getInputHostLabelText() {
+        return inputHostLabel.getText();
     }
 
-    public JTextField getTextField() {
-        return textField;
+    public String getTextAreaText() {
+        return textArea.getText();
     }
 
-    public JTextField getPortField() {
-        return portField;
+    public String getPortFieldText() {
+        return portField.getText();
     }
 
-    public JTextField getHostField() {
-        return hostField;
+    public String getHostFieldText() {
+        return hostField.getText();
     }
 
-    public JButton getSendButton() {
-        return sendButton;
+    public String getSendButtonText() {
+        return sendButton.getText();
+    }
+
+    public String getStatusLabelText() {
+        return statusLabel.getText();
     }
 }

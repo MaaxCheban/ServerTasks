@@ -18,9 +18,7 @@ public class Server implements RemoteFileWriter {
         File file = new File(buildFileName(id));
 
         try (PrintStream outputStream = new PrintStream(file)) {
-
             outputStream.println(text);
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

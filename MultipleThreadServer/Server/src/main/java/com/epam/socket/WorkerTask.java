@@ -58,7 +58,7 @@ public class WorkerTask implements Runnable {
     }
 
     private static boolean mustStop(String line) {
-        if (line == null || line.equals("stop")) {
+        if (line == null) {
             return true;
         }
         return false;
