@@ -26,11 +26,12 @@ public class WorkerTask implements Runnable {
         ) {
 
             String line = null;
+
             while (true) {
                 line = in.readLine();
 
-                if (mustStop(line)){
-                    break;
+                if(line == null){
+                    throw new IOException();
                 }
 
                 System.out.println("Entering clients line to the file ");
@@ -38,6 +39,7 @@ public class WorkerTask implements Runnable {
 
                 System.out.println("Waiting for the next line...");
                 System.out.println();
+
             }
 
         } catch (IOException e) {

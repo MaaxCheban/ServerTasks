@@ -3,23 +3,41 @@ package com.epam.swing;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.text.NumberFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.*;
+import java.text.NumberFormat;
+
+import static java.lang.Thread.sleep;
 
 
 public class Content extends JPanel {
-    private static final int PORT_COLUMNS = 10;
+    private static final int PORT_WIDTH = 200;
+    private static final int PORT_HEIGHT = 70;
+    private static final int PORT_DEFAULT = 8080;
+    private static final int MIN_PORT = 0;
+    private static final int MAX_PORT = 65535;
     private static final int HOST_COLUMNS = 15;
     private static final int TEXTAREA_COLUMNS = 30;
     private static final int TEXTAREA_ROWS = 5;
+    private static final String DEFAULT_HOST_NAME = "127.0.0.1";
+    private Thread heartbeatThread;
+    private long heartbeatDelayMillis = 500;
     private JLabel inputTextLabel;
     private JLabel inputPortLabel;
     private JLabel inputHostLabel;
     private JLabel statusLabel;
     private JTextArea textArea;
-    private JTextField portField;
+    private JFormattedTextField portField;
     private JTextField hostField;
     private JButton sendButton;
+    private Socket socket;
+
 
     private Content(ContentBuilder builder) {
         super(new MigLayout());
@@ -31,24 +49,84 @@ public class Content extends JPanel {
         portField = builder.portField;
         hostField = builder.hostField;
         sendButton = builder.sendButton;
+
     }
 
     private class ConnectButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            TextWriterWorker worker = new TextWriterWorker(statusLabel, textArea, portField, hostField);
-            worker.execute();
+            try {
+                String host = hostField.getText();
+                int port = Integer.parseInt(portField.getText());
+                if (socket == null) {
+                    socket = new Socket(host, port);
+                } else if (isDifferentSocket(socket, hostField.getText(), port)) {
+                    socket.close();
+                    socket = new Socket(host, port);
+                }
+
+                TextWriterWorker worker = new TextWriterWorker(socket.getOutputStream(), socket.getInputStream(), statusLabel, textArea, portField, hostField);
+                worker.execute();
+            } catch (UnknownHostException e1) {
+                statusLabel.setText("Status: Unknown host");
+                e1.printStackTrace();
+            } catch (NumberFormatException e1) {
+                statusLabel.setText("Status: wrong port format");
+            } catch (ConnectException e1) {
+                statusLabel.setText("Status: Trying to reconnect...");
+
+                heartbeatThread = new Thread() {
+                    public void run() {
+                        int counter;
+                        for (counter = 0; counter < 10; counter++) {
+                            try {
+                                if (socket == null) {
+                                    socket = new Socket(hostField.getText(), Integer.parseInt(portField.getText()));
+                                }
+                                socket.getOutputStream().write(666);
+
+                                statusLabel.setText("Status: Connected");
+                                break;
+                            } catch (IOException e) {
+                                try {
+                                    sleep(heartbeatDelayMillis);
+                                } catch (InterruptedException e2) {
+                                    e2.printStackTrace();
+                                }
+                                continue;
+                            }
+                        }
+
+                        if (counter == 10) {
+                            statusLabel.setText("Status: connection error");
+                        }
+                    }
+                };
+                heartbeatThread.start();
+
+
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        public boolean isDifferentSocket(Socket socket, String host, int port) throws UnknownHostException {
+            InetAddress inetAddress = InetAddress.getByName(host);
+            if (socket.getInetAddress().getHostAddress().equals(inetAddress.getHostAddress()) && socket.getPort() == port) {
+                return false;
+            }
+            return true;
         }
     }
-
 
     public void init() {
         sendButton.addActionListener(new ConnectButtonActionListener());
         this.add(inputTextLabel);
         this.add(textArea, "wrap");
         this.add(inputPortLabel);
-        this.add(portField, "split 3");
-        this.add(inputHostLabel, "gapleft 30");
+        this.add(portField, "wrap");
+        this.add(inputHostLabel);
         this.add(hostField, "wrap");
         this.add(sendButton, "wrap");
         this.add(statusLabel, "span 3");
@@ -59,8 +137,8 @@ public class Content extends JPanel {
         private JLabel inputPortLabel = new JLabel("Specify port:");
         private JLabel inputHostLabel = new JLabel("Specify Host:");
         private JTextArea textArea = new JTextArea(TEXTAREA_ROWS, TEXTAREA_COLUMNS);
-        private JTextField portField = new JTextField("8080", PORT_COLUMNS);
-        private JTextField hostField = new JTextField("127.0.0.1", HOST_COLUMNS);
+        private JFormattedTextField portField = new JFormattedTextField();
+        private JTextField hostField = new JTextField(DEFAULT_HOST_NAME, HOST_COLUMNS);
         private JButton sendButton = new JButton("Send");
         private JLabel statusLabel = new JLabel("Status: ");
 
@@ -100,6 +178,21 @@ public class Content extends JPanel {
         }
 
         public Content build() {
+            NumberFormat format = NumberFormat.getInstance();
+            format.setGroupingUsed(false);
+
+            NumberFormatter formatter = new NumberFormatter(format);
+            formatter.setValueClass(Integer.class);
+            formatter.setMinimum(MIN_PORT);
+            formatter.setMaximum(MAX_PORT);
+            formatter.setAllowsInvalid(false);
+
+            portField = new JFormattedTextField(formatter);
+            portField.setSize(PORT_WIDTH, PORT_HEIGHT);
+            portField.setValue(PORT_DEFAULT);
+
+            portField.setVisible(true);
+
             return new Content(this);
         }
     }
