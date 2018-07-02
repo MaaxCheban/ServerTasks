@@ -26,8 +26,6 @@ public class Content extends JPanel {
     private static final int TEXTAREA_COLUMNS = 30;
     private static final int TEXTAREA_ROWS = 5;
     private static final String DEFAULT_HOST_NAME = "127.0.0.1";
-    private Thread heartbeatThread;
-    private long heartbeatDelayMillis = 500;
     private JLabel inputTextLabel;
     private JLabel inputPortLabel;
     private JLabel inputHostLabel;
@@ -58,14 +56,14 @@ public class Content extends JPanel {
             try {
                 String host = hostField.getText();
                 int port = Integer.parseInt(portField.getText());
-                if (socket == null) {
+                if (socket == null || socket.isClosed()) {
                     socket = new Socket(host, port);
-                } else if (isDifferentSocket(socket, hostField.getText(), port)) {
+                } else if (isDifferentSocket(socket, host, port)) {
                     socket.close();
                     socket = new Socket(host, port);
                 }
 
-                TextWriterWorker worker = new TextWriterWorker(socket.getOutputStream(), socket.getInputStream(), statusLabel, textArea, portField, hostField);
+                TextWriterWorker worker = new TextWriterWorker(socket, statusLabel, textArea, portField, hostField, sendButton);
                 worker.execute();
             } catch (UnknownHostException e1) {
                 statusLabel.setText("Status: Unknown host");
@@ -75,8 +73,11 @@ public class Content extends JPanel {
             } catch (ConnectException e1) {
                 statusLabel.setText("Status: Trying to reconnect...");
 
-                heartbeatThread = new Thread() {
+                Thread heartbeatThread = new Thread() {
+                    private static final long heartbeatDelayMillis = 700;
+
                     public void run() {
+                        sendButton.setEnabled(false);
                         int counter;
                         for (counter = 0; counter < 10; counter++) {
                             try {
@@ -100,6 +101,9 @@ public class Content extends JPanel {
                         if (counter == 10) {
                             statusLabel.setText("Status: connection error");
                         }
+
+
+                        sendButton.setEnabled(true);
                     }
                 };
                 heartbeatThread.start();
