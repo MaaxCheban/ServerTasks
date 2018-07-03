@@ -3,34 +3,32 @@ package com.epam.swing;
 import javax.swing.*;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import static java.lang.Thread.sleep;
 
-public class ReconnectionWorker extends SwingWorker<Socket, Socket> {
+public class ReconnectionWorker extends SwingWorker<Socket, Void> {
     private Socket socket;
     private String host;
     private int port;
     private static final long delayMillis = 700;
 
-    public ReconnectionWorker(Socket socket, String host, int port){
-
+    public ReconnectionWorker(Socket socket){
         this.socket = socket;
-        this.host = host;
-        this.port = port;
+        this.host = socket.getInetAddress().getHostAddress();
+        this.port = socket.getPort();
     }
 
     @Override
     protected Socket doInBackground() throws Exception {
         int counter;
+
         for (counter = 0; counter < 10; counter++) {
             try {
-                if (socket == null) {
-                    socket = new Socket(host, port);
-                }
+                socket = new Socket(host, port);
                 socket.getOutputStream().write(666);
-
-                break;
+                return socket;
             } catch (IOException e) {
                 try {
                     sleep(delayMillis);
@@ -41,10 +39,6 @@ public class ReconnectionWorker extends SwingWorker<Socket, Socket> {
             }
         }
 
-        if (counter == 10) {
-            return null;
-        }
-
-        return socket;
+        return null;
     }
 }

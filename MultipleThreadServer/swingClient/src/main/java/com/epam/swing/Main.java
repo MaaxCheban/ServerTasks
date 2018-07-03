@@ -7,14 +7,16 @@ import java.lang.reflect.InvocationTargetException;
 
 public class Main {
     public static void main(String[] args) {
-        // write your code here
+
         try {
             SwingUtilities.invokeAndWait(new Runnable(){
                 public void run(){
-                    Window window = new Window();
-                    Content content = new Content.ContentBuilder().build();
-                    window.setContent(content);
-                    window.init();
+                    ConnectPanel connectPanel= new ConnectPanel.ConnectPanelBuilder().build();
+                    ComunicationPanel comunicationPanel= new ComunicationPanel.CommunicationPanelBuilder().build();
+
+                    Content content = new Content(connectPanel, comunicationPanel);
+                    Window window = new Window(content);
+                    window.setVisible(true);
                 }
             });
         } catch (InterruptedException e) {

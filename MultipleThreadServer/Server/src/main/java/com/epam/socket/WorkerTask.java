@@ -6,7 +6,6 @@ import java.util.Random;
 
 public class WorkerTask implements Runnable {
     private final Socket socket;
-    private static final String RESPONSE_OK = "OK";
 
     public WorkerTask(Socket socket) {
         this.socket = socket;
@@ -25,17 +24,12 @@ public class WorkerTask implements Runnable {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintStream outputToFile = new PrintStream(f)
         ) {
-
             String line = null;
-
             while (true) {
-
                 line = in.readLine();
-
                 if(line == null){
                     throw new IOException();
                 }
-
                 System.out.println("Entering clients line to the file ");
                 outputToFile.println(line);
 

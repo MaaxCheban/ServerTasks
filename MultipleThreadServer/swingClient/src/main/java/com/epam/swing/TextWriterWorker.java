@@ -44,41 +44,7 @@ public class TextWriterWorker extends SwingWorker<Void, Void> {
                     socketOutStream.flush();
                 }
             } catch (ConnectException e) {
-                statusLabel.setText("Status: server seems to be closed, reconnection");
-
-                Thread heartbeatThread = new Thread() {
-                    private static final long heartbeatDelayMillis = 700;
-
-                    public void run() {
-                        sendButton.setEnabled(false);
-                        int counter;
-                        for (counter = 0; counter < 10; counter++) {
-                            System.out.println(counter);
-                            try {
-                                socket = new Socket(hostField.getText(), Integer.parseInt(portField.getText()));
-
-                                socket.getOutputStream().write(666);
-
-                                statusLabel.setText("Status: Connected");
-                                break;
-                            } catch (IOException e) {
-                                try {
-                                    sleep(heartbeatDelayMillis);
-                                } catch (InterruptedException e2) {
-                                    e2.printStackTrace();
-                                }
-                                continue;
-                            }
-                        }
-
-                        if (counter == 10) {
-                            statusLabel.setText("Status: connection error, connect later");
-                        }
-                        sendButton.setEnabled(true);
-                    }
-                };
-                heartbeatThread.start();
-                e.printStackTrace();
+                statusLabel.setText("Status: server seems to be closed, reconnect later");
             }
 
         }catch (IllegalArgumentException ex) {
