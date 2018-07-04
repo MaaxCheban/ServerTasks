@@ -32,7 +32,6 @@ public class WorkerTask implements Runnable {
                 }
                 System.out.println("Entering clients line to the file ");
                 outputToFile.println(line);
-
                 System.out.println("Waiting for the next line...");
                 System.out.println();
 
@@ -55,10 +54,4 @@ public class WorkerTask implements Runnable {
         return "file " + id + ".txt";
     }
 
-    private static boolean mustStop(String line) {
-        if (line == null) {
-            return true;
-        }
-        return false;
-    }
 }

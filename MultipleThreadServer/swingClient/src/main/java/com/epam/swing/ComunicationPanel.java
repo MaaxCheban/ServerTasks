@@ -3,12 +3,13 @@ package com.epam.swing;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ComunicationPanel extends JPanel{
     private static final int TEXTAREA_COLUMNS = 30;
     private static final int TEXTAREA_ROWS = 5;
     private JLabel inputTextLabel;
-    private JLabel statusLabel;
     private JTextArea textArea;
     private JButton sendButton;
     private Content parentContentContainer;
@@ -16,19 +17,30 @@ public class ComunicationPanel extends JPanel{
     private ComunicationPanel(CommunicationPanelBuilder builder){
         super(new MigLayout());
         inputTextLabel = builder.inputTextLabel;
-        statusLabel = builder.statusLabel;
         textArea = builder.textArea;
         sendButton = builder.sendButton;
+
+        sendButton.addActionListener(new SendButtonActionListener());
 
         this.add(inputTextLabel, "span 2");
         this.add(textArea, "wrap");
         this.add(sendButton, "wrap");
-        this.add(statusLabel, "span 2");
+    }
+
+    private class SendButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                parentContentContainer.getBlockingQueue().put(textArea.getText());
+                textArea.setText("");
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 
     public static class CommunicationPanelBuilder {
         private JLabel inputTextLabel = new JLabel("Input text: ");
-        private JLabel statusLabel = new JLabel("Status: ");
         private JTextArea textArea = new JTextArea(TEXTAREA_ROWS, TEXTAREA_COLUMNS);
         private JButton sendButton = new JButton("Send");
 
@@ -53,28 +65,8 @@ public class ComunicationPanel extends JPanel{
     }
 
 
-    public static int getTextareaColumns() {
-        return TEXTAREA_COLUMNS;
-    }
-
-    public static int getTextareaRows() {
-        return TEXTAREA_ROWS;
-    }
-
-    public JLabel getInputTextLabel() {
-        return inputTextLabel;
-    }
-
-    public void setInputTextLabel(JLabel inputTextLabel) {
-        this.inputTextLabel = inputTextLabel;
-    }
-
-    public JLabel getStatusLabel() {
-        return statusLabel;
-    }
-
-    public void setStatusLabel(JLabel statusLabel) {
-        this.statusLabel = statusLabel;
+    public void setParentContentContainer(Content parentContentContainer) {
+        this.parentContentContainer = parentContentContainer;
     }
 
     public JTextArea getTextArea() {
@@ -91,13 +83,5 @@ public class ComunicationPanel extends JPanel{
 
     public void setSendButton(JButton sendButton) {
         this.sendButton = sendButton;
-    }
-
-    public Content getParentContentContainer() {
-        return parentContentContainer;
-    }
-
-    public void setParentContentContainer(Content parentContentContainer) {
-        this.parentContentContainer = parentContentContainer;
     }
 }

@@ -1,6 +1,7 @@
 package com.epam.swing;
 
 import net.miginfocom.swing.MigLayout;
+import sun.nio.ch.Net;
 
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
@@ -8,9 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.text.NumberFormat;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 
@@ -27,19 +30,17 @@ public class ConnectPanel extends JPanel {
     private static final String DEFAULT_PORT_LABEL = "Specify port:";
     private static final String DEFAULT_HOST_LABEL = "Specify host:";
     private static final String DEFAULT_CONNECT_BUTTON = "Connect";
-    private static final String DEFAULT_STATUS_LABEL = "Status:";
     private JLabel inputPortLabel;
     private JLabel inputHostLabel;
-    private JLabel statusLabel;
     private JFormattedTextField portField;
     private JTextField hostField;
     private JButton connectButton;
     private Content parentContentContainer;
 
 
+
     private ConnectPanel(ConnectPanelBuilder builder) {
         super(new MigLayout());
-        statusLabel = builder.statusLabel;
         inputPortLabel = builder.inputPortLabel;
         inputHostLabel = builder.inputHostLabel;
         portField = builder.portField;
@@ -53,60 +54,8 @@ public class ConnectPanel extends JPanel {
         this.add(inputPortLabel, "span 2");
         this.add(portField, "wrap");
         this.add(connectButton, "wrap");
-        this.add(statusLabel, "span 4");
     }
 
-    public JLabel getInputPortLabel() {
-        return inputPortLabel;
-    }
-
-    public void setInputPortLabel(JLabel inputPortLabel) {
-        this.inputPortLabel = inputPortLabel;
-    }
-
-    public JLabel getInputHostLabel() {
-        return inputHostLabel;
-    }
-
-    public void setInputHostLabel(JLabel inputHostLabel) {
-        this.inputHostLabel = inputHostLabel;
-    }
-
-    public JLabel getStatusLabel() {
-        return statusLabel;
-    }
-
-    public void setStatusLabel(JLabel statusLabel) {
-        this.statusLabel = statusLabel;
-    }
-
-    public JFormattedTextField getPortField() {
-        return portField;
-    }
-
-    public void setPortField(JFormattedTextField portField) {
-        this.portField = portField;
-    }
-
-    public JTextField getHostField() {
-        return hostField;
-    }
-
-    public void setHostField(JTextField hostField) {
-        this.hostField = hostField;
-    }
-
-    public JButton getConnectButton() {
-        return connectButton;
-    }
-
-    public void setConnectButton(JButton connectButton) {
-        this.connectButton = connectButton;
-    }
-
-    public Content getParentContentContainer() {
-        return parentContentContainer;
-    }
 
     public void setParentContentContainer(Content parentContentContainer) {
         this.parentContentContainer = parentContentContainer;
@@ -119,10 +68,13 @@ public class ConnectPanel extends JPanel {
                 throw new UnsupportedOperationException("Content is not defined");
             }
 
-            ConnectionThread connectionThread = new ConnectionThread(hostField.getText(), Integer.parseInt(portField.getText()));
+            InetSocketAddress inetSocketAddress = new InetSocketAddress(hostField.getText(), Integer.parseInt(portField.getText()));
 
+            JButton sendButton = parentContentContainer.getComunicationPanel().getSendButton();
 
-            //parentContentContainer.toggle();
+            CommunicationTask communicationTask = new CommunicationTask(inetSocketAddress, parentContentContainer, connectButton, sendButton);
+            communicationTask.start();
+
         }
     }
 
@@ -132,7 +84,6 @@ public class ConnectPanel extends JPanel {
         private JFormattedTextField portField = new JFormattedTextField();
         private JTextField hostField = new JTextField(DEFAULT_HOST_NAME, HOST_COLUMNS);
         private JButton connectButton = new JButton(DEFAULT_CONNECT_BUTTON);
-        private JLabel statusLabel = new JLabel(DEFAULT_STATUS_LABEL);
 
 
         public ConnectPanelBuilder setInputPortLabelText(String inputPortLabel) {
