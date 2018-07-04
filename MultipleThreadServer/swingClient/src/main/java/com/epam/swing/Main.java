@@ -2,7 +2,6 @@ package com.epam.swing;
 
 
 import javax.swing.*;
-import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 
 public class Main {
@@ -24,8 +23,5 @@ public class Main {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-
-
     }
 }
-
