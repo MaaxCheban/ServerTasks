@@ -7,17 +7,8 @@ import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.text.NumberFormat;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-
-import static java.lang.Thread.sleep;
 
 public class ConnectPanel extends JPanel {
     private static final int PORT_WIDTH = 200;

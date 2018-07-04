@@ -44,21 +44,17 @@ public class CommunicationTask implements Runnable {
     public void run() {
         try {
             connect();
-
             content.toggle();
-
             communicate();
-
-
         } catch (ConnectException e) {
             statusLabel.setText("Unable to connect");
-            sendButton.setEnabled(true);
+            sendButton.setEnabled(false);
             connectButton.setEnabled(true);
             e.printStackTrace();
         }
     }
 
-    private void communicate(){
+    private void communicate() throws ConnectException {
         try {
             while (true) {
                 String text = blockingQueue.take();
@@ -89,6 +85,8 @@ public class CommunicationTask implements Runnable {
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (ConnectException e) {
+            throw new ConnectException();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -108,24 +106,23 @@ public class CommunicationTask implements Runnable {
     }
 
     private void reconnect(String text) throws ConnectException {
-        for(int i = 0; i < 10; i++){
-            try{
+        for (int i = 0; i < 10; i++) {
+            try {
                 Socket newSocket = new Socket(inetSocketAddress.getHostName(), inetSocketAddress.getPort());
                 PrintStream printStream = new PrintStream(newSocket.getOutputStream());
                 printStream.println(text);
-                if(printStream.checkError()){
+                if (printStream.checkError()) {
                     Thread.sleep(DELAY_RECONNECTION_TIME);
                     continue;
-                }else{
+                } else {
                     socket = newSocket;
                     return;
                 }
-            }catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (UnknownHostException e) {
                 statusLabel.setText("Unknown host");
-                e.printStackTrace();
-                break;
+                throw new ConnectException();
             } catch (IOException e) {
                 continue;
             }
