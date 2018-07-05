@@ -30,6 +30,10 @@ public class ComunicationPanel extends JPanel {
     private class SendButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (parentContentContainer == null) {
+                throw new UnsupportedOperationException("Content is not defined");
+            }
+
             try {
                 parentContentContainer.getBlockingQueue().put(textArea.getText());
                 textArea.setText("");

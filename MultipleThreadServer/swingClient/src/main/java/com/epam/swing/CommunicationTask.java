@@ -10,6 +10,7 @@ import java.util.concurrent.*;
 
 public class CommunicationTask implements Runnable {
     private static final int DELAY_RECONNECTION_TIME = 700;
+    private static final int COUNT_OF_THREADS = 700;
     private final Executor executor;
     private final InetSocketAddress inetSocketAddress;
     private final BlockingQueue<String> blockingQueue;
@@ -22,7 +23,7 @@ public class CommunicationTask implements Runnable {
         this.blockingQueue = content.getBlockingQueue();
         this.content = content;
 
-        executor = Executors.newFixedThreadPool(1);
+        executor = Executors.newFixedThreadPool(COUNT_OF_THREADS);
     }
 
     public void start() {
@@ -37,13 +38,19 @@ public class CommunicationTask implements Runnable {
             communicate();
         } catch (ConnectException e) {
             content.setStatusLabel("Unable to connect");
-            content.setSendButtonEnabled(false);
             content.setConnectButtonEnabled(true);
+            content.setSendButtonEnabled(false);
+            e.printStackTrace();
+        } catch (UnknownHostException e) {
+            content.setStatusLabel("Unknown host");
+            content.setConnectButtonEnabled(true);
+            content.setSendButtonEnabled(false);
+
             e.printStackTrace();
         }
     }
 
-    private void communicate() throws ConnectException {
+    private void communicate() throws ConnectException, UnknownHostException {
         try {
             while (true) {
                 String text = blockingQueue.take();
@@ -52,9 +59,8 @@ public class CommunicationTask implements Runnable {
                 outputStream.println(text);
 
                 if (outputStream.checkError()) {
-
-                    reconnect();
-
+                    reconnect();    /* if something went wrong connect exception will be thrown*/
+                    outputStream.println(text);
                 } else {
                     content.setStatusLabel("Text was succesfully sent");
                 }
@@ -67,40 +73,36 @@ public class CommunicationTask implements Runnable {
         }
     }
 
-    private void connect() throws ConnectException {
+    private void connect() throws ConnectException, UnknownHostException {
         content.setConnectButtonEnabled(false);
         try {
-            socket = new Socket(inetSocketAddress.getHostName(), inetSocketAddress.getPort());
+            Socket newSocket = new Socket(inetSocketAddress.getHostName(), inetSocketAddress.getPort());
+            if(socket != null){
+                socket.close();
+            }
+            socket = newSocket;
             outputStream = new PrintStream(socket.getOutputStream());
-            content.setStatusLabel("Connected, waiting for text");
 
+            content.setStatusLabel("Connected, waiting for text");
             content.setSendButtonEnabled(true);
             return;
-        } catch (Exception e) {
+        } catch(UnknownHostException e) {
+            throw new UnknownHostException();
+        } catch(IOException e) {
             throw new ConnectException();
         }
-
     }
 
-    private void reconnect() throws ConnectException {
+    private void reconnect() throws ConnectException, UnknownHostException {
         content.setStatusLabel("Server disconnected, trying to reconnect...");
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         for (int i = 0; i < 10; i++) {
             try {
-                Socket newSocket = new Socket(inetSocketAddress.getHostName(), inetSocketAddress.getPort());
-                socket = newSocket;
-                content.setStatusLabel("Reconnected");
-                content.setSendButtonEnabled(true);
+                connect();
                 return;
-            } catch (UnknownHostException e) {
-                content.setStatusLabel("Unknown host");
-                throw new ConnectException();
-            } catch (IOException e) {
+            } catch (UnknownHostException e){
+                throw new UnknownHostException();
+            } catch(IOException e) {
                 try {
                     Thread.sleep(DELAY_RECONNECTION_TIME);
                 } catch (InterruptedException e1) {
