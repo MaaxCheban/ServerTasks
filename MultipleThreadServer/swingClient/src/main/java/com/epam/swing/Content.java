@@ -32,16 +32,16 @@ public class Content extends JPanel {
         this.add(statusLabel, "wrap");
     }
 
-    public void toggle() {
-        if(Thread.currentThread().getName().equals("AWT-EventQueue-0")){
-            remove(connectPanel);
-            add(comunicationPanel, "wrap");
-            updateUI();
-
-            return;
+    private void invoke(Runnable runnable) {
+        if (SwingUtilities.isEventDispatchThread()) {
+            runnable.run();
+        } else {
+            SwingUtilities.invokeLater(runnable);
         }
+    }
 
-        SwingUtilities.invokeLater(() -> {
+    public void toggle() {
+        invoke(() -> {
                 remove(connectPanel);
                 add(comunicationPanel, "wrap");
                 updateUI();
@@ -50,30 +50,16 @@ public class Content extends JPanel {
     }
 
     public void setSendButtonEnabled(final boolean par){
-        if(Thread.currentThread().getName().equals("AWT-EventQueue-0")){
-            comunicationPanel.setSendButtonEnabled(par);
-            return;
-        }
 
-        SwingUtilities.invokeLater(() -> comunicationPanel.setSendButtonEnabled(par));
+        invoke(() -> comunicationPanel.setSendButtonEnabled(par));
     }
 
     public void setConnectButtonEnabled(final boolean par){
-        if(Thread.currentThread().getName().equals("AWT-EventQueue-0")){
-            connectPanel.setConnectButtonEnabled(par);
-            return;
-        }
-
-        SwingUtilities.invokeLater(() -> connectPanel.setConnectButtonEnabled(par));
+        invoke(() -> connectPanel.setConnectButtonEnabled(par));
     }
 
     public void setStatusLabel(final String status){
-        if(Thread.currentThread().getName().equals("AWT-EventQueue-0")){
-            statusLabel.setText("Status :" + status);
-            return;
-        }
-
-        SwingUtilities.invokeLater(() -> statusLabel.setText("Status :" + status));
+        invoke(() -> statusLabel.setText("Status :" + status));
     }
 
     public BlockingQueue<String> getBlockingQueue() {

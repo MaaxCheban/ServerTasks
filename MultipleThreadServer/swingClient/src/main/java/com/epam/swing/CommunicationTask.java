@@ -10,7 +10,7 @@ import java.util.concurrent.*;
 
 public class CommunicationTask implements Runnable {
     private static final int DELAY_RECONNECTION_TIME = 700;
-    private static final int COUNT_OF_THREADS = 700;
+    private static final int COUNT_OF_THREADS = 1;
     private final Executor executor;
     private final InetSocketAddress inetSocketAddress;
     private final BlockingQueue<String> blockingQueue;
@@ -68,7 +68,6 @@ public class CommunicationTask implements Runnable {
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
-
             throw new ConnectException();
         }
     }
@@ -87,7 +86,7 @@ public class CommunicationTask implements Runnable {
             content.setSendButtonEnabled(true);
             return;
         } catch(UnknownHostException e) {
-            throw new UnknownHostException();
+            throw e;
         } catch(IOException e) {
             throw new ConnectException();
         }
@@ -101,7 +100,7 @@ public class CommunicationTask implements Runnable {
                 connect();
                 return;
             } catch (UnknownHostException e){
-                throw new UnknownHostException();
+                throw e;
             } catch(IOException e) {
                 try {
                     Thread.sleep(DELAY_RECONNECTION_TIME);
