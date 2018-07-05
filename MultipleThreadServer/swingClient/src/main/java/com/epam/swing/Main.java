@@ -8,15 +8,13 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            SwingUtilities.invokeAndWait(new Runnable(){
-                public void run(){
-                    ConnectPanel connectPanel= new ConnectPanel.ConnectPanelBuilder().build();
-                    ComunicationPanel comunicationPanel= new ComunicationPanel.CommunicationPanelBuilder().build();
+            SwingUtilities.invokeAndWait(() -> {
+                ConnectPanel connectPanel= new ConnectPanel.ConnectPanelBuilder().build();
+                ComunicationPanel comunicationPanel= new ComunicationPanel.CommunicationPanelBuilder().build();
 
-                    Content content = new Content(connectPanel, comunicationPanel);
-                    Window window = new Window(content);
-                    window.setVisible(true);
-                }
+                Content content = new Content(connectPanel, comunicationPanel);
+                Window window = new Window(content);
+                window.setVisible(true);
             });
         } catch (InterruptedException e) {
             e.printStackTrace();

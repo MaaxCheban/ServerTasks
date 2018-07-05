@@ -50,7 +50,6 @@ public class Content extends JPanel {
     }
 
     public void setSendButtonEnabled(final boolean par){
-
         invoke(() -> comunicationPanel.setSendButtonEnabled(par));
     }
 

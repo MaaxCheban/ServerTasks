@@ -1,7 +1,6 @@
 package com.epam.swing;
 
 import net.miginfocom.swing.MigLayout;
-import sun.nio.ch.Net;
 
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
@@ -119,5 +118,4 @@ public class ConnectPanel extends JPanel {
             return new ConnectPanel(this);
         }
     }
-
 }
