@@ -6,15 +6,15 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ComunicationPanel extends JPanel{
+public class ComunicationPanel extends JPanel {
     private static final int TEXTAREA_COLUMNS = 30;
     private static final int TEXTAREA_ROWS = 5;
-    private JLabel inputTextLabel;
-    private JTextArea textArea;
-    private JButton sendButton;
+    private final JLabel inputTextLabel;
+    private final JTextArea textArea;
+    private final JButton sendButton;
     private Content parentContentContainer;
 
-    private ComunicationPanel(CommunicationPanelBuilder builder){
+    private ComunicationPanel(CommunicationPanelBuilder builder) {
         super(new MigLayout());
         inputTextLabel = builder.inputTextLabel;
         textArea = builder.textArea;
@@ -60,28 +60,17 @@ public class ComunicationPanel extends JPanel{
         }
 
         public ComunicationPanel build() {
+            sendButton.setEnabled(false);
             return new ComunicationPanel(this);
         }
     }
 
+    public void setSendButtonEnabled(boolean par){
+        sendButton.setEnabled(par);
+    }
 
     public void setParentContentContainer(Content parentContentContainer) {
         this.parentContentContainer = parentContentContainer;
     }
 
-    public JTextArea getTextArea() {
-        return textArea;
-    }
-
-    public void setTextArea(JTextArea textArea) {
-        this.textArea = textArea;
-    }
-
-    public JButton getSendButton() {
-        return sendButton;
-    }
-
-    public void setSendButton(JButton sendButton) {
-        this.sendButton = sendButton;
-    }
 }

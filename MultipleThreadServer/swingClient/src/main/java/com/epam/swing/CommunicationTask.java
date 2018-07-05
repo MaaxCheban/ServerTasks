@@ -1,10 +1,5 @@
 package com.epam.swing;
 
-import jdk.nashorn.internal.ir.Block;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ConnectException;
@@ -15,22 +10,16 @@ import java.util.concurrent.*;
 
 public class CommunicationTask implements Runnable {
     private static final int DELAY_RECONNECTION_TIME = 700;
+    private final Executor executor;
+    private final InetSocketAddress inetSocketAddress;
+    private final BlockingQueue<String> blockingQueue;
+    private final Content content;
     private Socket socket;
-    private JLabel statusLabel;
-    private Executor executor;
-    private InetSocketAddress inetSocketAddress;
-    private BlockingQueue<String> blockingQueue;
-    private JButton connectButton;
-    private JButton sendButton;
     private PrintStream outputStream;
-    private Content content;
 
-    public CommunicationTask(InetSocketAddress inetSocketAddress, Content content, JButton connectButton, JButton sendButton) {
+    public CommunicationTask(InetSocketAddress inetSocketAddress, Content content) {
         this.inetSocketAddress = inetSocketAddress;
         this.blockingQueue = content.getBlockingQueue();
-        this.statusLabel = content.getStatusLabel();
-        this.connectButton = connectButton;
-        this.sendButton = sendButton;
         this.content = content;
 
         executor = Executors.newFixedThreadPool(1);
@@ -47,9 +36,9 @@ public class CommunicationTask implements Runnable {
             content.toggle();
             communicate();
         } catch (ConnectException e) {
-            statusLabel.setText("Unable to connect");
-            sendButton.setEnabled(false);
-            connectButton.setEnabled(true);
+            content.setStatusLabel("Unable to connect");
+            content.setSendButtonEnabled(false);
+            content.setConnectButtonEnabled(true);
             e.printStackTrace();
         }
     }
@@ -59,71 +48,65 @@ public class CommunicationTask implements Runnable {
             while (true) {
                 String text = blockingQueue.take();
 
-                sendButton.setEnabled(false);
+                content.setSendButtonEnabled(false);
                 outputStream.println(text);
 
                 if (outputStream.checkError()) {
-                    statusLabel.setText("Server disconnected, trying to reconnect...");
-                    socket.close();
 
-                    reconnect(text);
-
-                    if(socket == null){
-                        sendButton.setEnabled(false);
-                        statusLabel.setText("Reconnect later");
-                        break;
-                    }else{
-                        outputStream = new PrintStream(socket.getOutputStream());
-                        statusLabel.setText("Reconnected");
-                        sendButton.setEnabled(true);
-                    }
+                    reconnect();
 
                 } else {
-                    statusLabel.setText("Text was succesfully sent");
+                    content.setStatusLabel("Text was succesfully sent");
                 }
-                sendButton.setEnabled(true);
+                content.setSendButtonEnabled(true);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } catch (ConnectException e) {
+
             throw new ConnectException();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
-    private void connect() throws ConnectException{
-        connectButton.setEnabled(false);
+    private void connect() throws ConnectException {
+        content.setConnectButtonEnabled(false);
         try {
             socket = new Socket(inetSocketAddress.getHostName(), inetSocketAddress.getPort());
             outputStream = new PrintStream(socket.getOutputStream());
-            statusLabel.setText("Connected, waiting for text");
+            content.setStatusLabel("Connected, waiting for text");
+
+            content.setSendButtonEnabled(true);
             return;
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new ConnectException();
         }
 
     }
 
-    private void reconnect(String text) throws ConnectException {
+    private void reconnect() throws ConnectException {
+        content.setStatusLabel("Server disconnected, trying to reconnect...");
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         for (int i = 0; i < 10; i++) {
             try {
                 Socket newSocket = new Socket(inetSocketAddress.getHostName(), inetSocketAddress.getPort());
-                PrintStream printStream = new PrintStream(newSocket.getOutputStream());
-                printStream.println(text);
-                if (printStream.checkError()) {
-                    Thread.sleep(DELAY_RECONNECTION_TIME);
-                    continue;
-                } else {
-                    socket = newSocket;
-                    return;
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                socket = newSocket;
+                content.setStatusLabel("Reconnected");
+                content.setSendButtonEnabled(true);
+                return;
             } catch (UnknownHostException e) {
-                statusLabel.setText("Unknown host");
+                content.setStatusLabel("Unknown host");
                 throw new ConnectException();
             } catch (IOException e) {
+                try {
+                    Thread.sleep(DELAY_RECONNECTION_TIME);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                    throw new ConnectException();
+                }
                 continue;
             }
         }

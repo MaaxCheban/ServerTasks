@@ -21,14 +21,12 @@ public class ConnectPanel extends JPanel {
     private static final String DEFAULT_PORT_LABEL = "Specify port:";
     private static final String DEFAULT_HOST_LABEL = "Specify host:";
     private static final String DEFAULT_CONNECT_BUTTON = "Connect";
-    private JLabel inputPortLabel;
-    private JLabel inputHostLabel;
-    private JFormattedTextField portField;
-    private JTextField hostField;
-    private JButton connectButton;
+    private final JLabel inputPortLabel;
+    private final JLabel inputHostLabel;
+    private final JFormattedTextField portField;
+    private final JTextField hostField;
+    private final JButton connectButton;
     private Content parentContentContainer;
-
-
 
     private ConnectPanel(ConnectPanelBuilder builder) {
         super(new MigLayout());
@@ -41,12 +39,11 @@ public class ConnectPanel extends JPanel {
         connectButton.addActionListener(new ConnectButtonActionListener());
 
         this.add(inputHostLabel, "span 2");
-        this.add(hostField,"wrap");
+        this.add(hostField, "wrap");
         this.add(inputPortLabel, "span 2");
         this.add(portField, "wrap");
         this.add(connectButton, "wrap");
     }
-
 
     public void setParentContentContainer(Content parentContentContainer) {
         this.parentContentContainer = parentContentContainer;
@@ -55,18 +52,19 @@ public class ConnectPanel extends JPanel {
     private class ConnectButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(parentContentContainer == null){
+            if (parentContentContainer == null) {
                 throw new UnsupportedOperationException("Content is not defined");
             }
 
             InetSocketAddress inetSocketAddress = new InetSocketAddress(hostField.getText(), Integer.parseInt(portField.getText()));
 
-            JButton sendButton = parentContentContainer.getComunicationPanel().getSendButton();
-
-            CommunicationTask communicationTask = new CommunicationTask(inetSocketAddress, parentContentContainer, connectButton, sendButton);
+            CommunicationTask communicationTask = new CommunicationTask(inetSocketAddress, parentContentContainer);
             communicationTask.start();
-
         }
+    }
+
+    public void setConnectButtonEnabled(boolean par){
+        connectButton.setEnabled(par);
     }
 
     public static class ConnectPanelBuilder {

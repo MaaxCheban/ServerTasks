@@ -24,7 +24,7 @@ public class WorkerTask implements Runnable {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintStream outputToFile = new PrintStream(f)
         ) {
-            String line = null;
+            String line;
             while (true) {
                 line = in.readLine();
                 if(line == null){
@@ -34,7 +34,6 @@ public class WorkerTask implements Runnable {
                 outputToFile.println(line);
                 System.out.println("Waiting for the next line...");
                 System.out.println();
-
             }
 
         } catch (IOException e) {
