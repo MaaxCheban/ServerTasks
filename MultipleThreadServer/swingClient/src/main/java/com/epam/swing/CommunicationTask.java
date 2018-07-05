@@ -1,6 +1,8 @@
 package com.epam.swing;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
@@ -17,6 +19,8 @@ public class CommunicationTask implements Runnable {
     private final Content content;
     private Socket socket;
     private PrintStream outputStream;
+    private BufferedReader inputStream;
+    public int user_id = -1; /* -1 - means that user is new to the server */
 
     public CommunicationTask(InetSocketAddress inetSocketAddress, Content content) {
         this.inetSocketAddress = inetSocketAddress;
@@ -36,16 +40,10 @@ public class CommunicationTask implements Runnable {
             connect();
             content.toggle();
             communicate();
-        } catch (ConnectException e) {
-            content.setStatusLabel("Unable to connect");
+        } catch (ConnectException | UnknownHostException e) {
+            content.setStatusLabel("Unable to connect or host is wrong");
             content.setConnectButtonEnabled(true);
             content.setSendButtonEnabled(false);
-            e.printStackTrace();
-        } catch (UnknownHostException e) {
-            content.setStatusLabel("Unknown host");
-            content.setConnectButtonEnabled(true);
-            content.setSendButtonEnabled(false);
-
             e.printStackTrace();
         }
     }
@@ -61,9 +59,12 @@ public class CommunicationTask implements Runnable {
                 if (outputStream.checkError()) {
                     reconnect();    /* if something went wrong connect exception will be thrown*/
                     outputStream.println(text);
-                } else {
-                    content.setStatusLabel("Text was succesfully sent");
                 }
+
+                if (!outputStream.checkError()) {
+                    content.setStatusLabel("Text was successfully sent");
+                }
+
                 content.setSendButtonEnabled(true);
             }
         } catch (InterruptedException e) {
@@ -75,19 +76,26 @@ public class CommunicationTask implements Runnable {
     private void connect() throws ConnectException, UnknownHostException {
         content.setConnectButtonEnabled(false);
         try {
-            Socket newSocket = new Socket(inetSocketAddress.getHostName(), inetSocketAddress.getPort());
-            if(socket != null){
+            if (socket != null) {
                 socket.close();
             }
-            socket = newSocket;
+            socket = new Socket(inetSocketAddress.getHostName(), inetSocketAddress.getPort());
             outputStream = new PrintStream(socket.getOutputStream());
+            inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            outputStream.println(user_id);
+
+            if(user_id == -1){
+                user_id = Integer.parseInt(inputStream.readLine());
+            }
+
+            System.out.println(user_id);
 
             content.setStatusLabel("Connected, waiting for text");
             content.setSendButtonEnabled(true);
-            return;
-        } catch(UnknownHostException e) {
+        } catch (UnknownHostException e) {
             throw e;
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new ConnectException();
         }
     }
@@ -99,9 +107,9 @@ public class CommunicationTask implements Runnable {
             try {
                 connect();
                 return;
-            } catch (UnknownHostException e){
+            } catch (UnknownHostException e) {
                 throw e;
-            } catch(IOException e) {
+            } catch (IOException e) {
                 try {
                     Thread.sleep(DELAY_RECONNECTION_TIME);
                 } catch (InterruptedException e1) {

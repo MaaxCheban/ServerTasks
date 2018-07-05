@@ -2,6 +2,7 @@ package com.epam.socket;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.file.FileSystem;
 import java.util.Random;
 
 public class WorkerTask implements Runnable {
@@ -14,16 +15,30 @@ public class WorkerTask implements Runnable {
     @Override
     public void run() {
 
-        int id = new Random().nextInt(10000);
-        System.out.println("Got a client " + id);
+        System.out.println("Got a client ");
         System.out.println();
-
-        File f = new File(buildFileName(id));
-
+        int id = -1;
         try (
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                PrintStream outputToFile = new PrintStream(f)
+                PrintStream out = new PrintStream(socket.getOutputStream())
         ) {
+
+            id = Integer.parseInt(in.readLine());
+
+
+            if(id == -1){
+                id = new Random().nextInt(10000);
+                out.println(id);
+            }
+
+            
+            File file = new File(buildFileName(id));
+
+            System.out.println(id);
+
+
+            PrintStream outputToFile = new PrintStream(file);
+
             String line;
             while (true) {
                 line = in.readLine();

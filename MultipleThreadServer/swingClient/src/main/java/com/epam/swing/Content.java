@@ -58,7 +58,7 @@ public class Content extends JPanel {
     }
 
     public void setStatusLabel(final String status){
-        invoke(() -> statusLabel.setText("Status :" + status));
+        invoke(() -> statusLabel.setText("Status: " + status));
     }
 
     public BlockingQueue<String> getBlockingQueue() {
