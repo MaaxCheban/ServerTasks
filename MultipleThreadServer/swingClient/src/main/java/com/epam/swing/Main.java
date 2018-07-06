@@ -6,7 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 
 public class Main {
     public static void main(String[] args) {
-
         try {
             SwingUtilities.invokeAndWait(() -> {
                 ConnectPanel connectPanel= new ConnectPanel.ConnectPanelBuilder().build();

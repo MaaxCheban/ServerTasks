@@ -13,6 +13,7 @@ import java.util.concurrent.*;
 public class CommunicationTask implements Runnable {
     private static final int DELAY_RECONNECTION_TIME = 700;
     private static final int COUNT_OF_THREADS = 1;
+    private static final long NEW_CLIENT_ID = -1;
     private final Executor executor;
     private final InetSocketAddress inetSocketAddress;
     private final BlockingQueue<String> blockingQueue;
@@ -20,7 +21,7 @@ public class CommunicationTask implements Runnable {
     private Socket socket;
     private PrintStream outputStream;
     private BufferedReader inputStream;
-    public int user_id = -1; /* -1 - means that user is new to the server */
+    private long userId = NEW_CLIENT_ID;
 
     public CommunicationTask(InetSocketAddress inetSocketAddress, Content content) {
         this.inetSocketAddress = inetSocketAddress;
@@ -57,7 +58,7 @@ public class CommunicationTask implements Runnable {
                 outputStream.println(text);
 
                 if (outputStream.checkError()) {
-                    reconnect();    /* if something went wrong connect exception will be thrown*/
+                    reconnect();    // if something went wrong connect exception will be thrown
                     outputStream.println(text);
                 }
 
@@ -83,10 +84,10 @@ public class CommunicationTask implements Runnable {
             outputStream = new PrintStream(socket.getOutputStream());
             inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            outputStream.println(user_id);
+            outputStream.println(userId);
 
-            if(user_id == -1){
-                user_id = Integer.parseInt(inputStream.readLine());
+            if(userId == -1){
+                userId = Long.parseLong(inputStream.readLine());
             }
 
             content.setStatusLabel("Connected, waiting for text");

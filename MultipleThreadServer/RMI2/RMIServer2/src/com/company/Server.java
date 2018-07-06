@@ -21,8 +21,6 @@ public class Server implements RemoteFileWriter {
             outputStream.println(text);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -60,3 +58,11 @@ public class Server implements RemoteFileWriter {
         }
     }
 }
+
+
+
+//    RemoteFileWriter stub = (RemoteFileWriter) UnicastRemoteObject.exportObject(this, remoteObjectConnectionPort);
+//
+//    Registry registry = LocateRegistry.createRegistry(registryPort);
+//
+//            registry.bind("RemoteFileWriter", stub);

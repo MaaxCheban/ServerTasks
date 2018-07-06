@@ -1,7 +1,6 @@
 package com.epam.swing;
 
 import net.miginfocom.swing.MigLayout;
-
 import javax.swing.*;
 
 public class Window extends JFrame {

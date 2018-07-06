@@ -1,7 +1,6 @@
 package com.epam.swing;
 
 import net.miginfocom.swing.MigLayout;
-
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.event.ActionEvent;

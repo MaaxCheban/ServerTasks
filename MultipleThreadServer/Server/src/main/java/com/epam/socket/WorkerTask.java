@@ -3,13 +3,15 @@ package com.epam.socket;
 import java.io.*;
 import java.net.Socket;
 import java.nio.file.FileSystem;
-import java.util.Random;
+import java.util.*;
 
 public class WorkerTask implements Runnable {
     private final Socket socket;
+    private static PropertyManager propertyManager;
 
-    public WorkerTask(Socket socket) {
+    public WorkerTask(Socket socket, PropertyManager propertyManager) throws FileNotFoundException {
         this.socket = socket;
+        this.propertyManager = propertyManager;
     }
 
     @Override
@@ -19,12 +21,28 @@ public class WorkerTask implements Runnable {
                 PrintStream out = new PrintStream(socket.getOutputStream())
         ) {
 
-            int id = Integer.parseInt(in.readLine());
+            long id = Long.parseLong(in.readLine());
+
+            List<String> activeUsers = new ArrayList<>(Arrays.asList(propertyManager.getProperty("Active_users").split(", ")));
+            for(String user : activeUsers){
+                System.out.println(user);
+            }
+
+            if(id > getId()){
+                throw new Hacker_Exception();
+            }
 
             if (id == -1) {
-                id = new Random().nextInt(10000);
+                id = getId();
+                updateId(id + 1);
                 out.println(id);
             }
+
+            activeUsers.add(String.valueOf(id));
+
+            String activeUsersFormated = String.join(", ", (String[])activeUsers.toArray());
+            System.out.println(activeUsersFormated);
+            propertyManager.setProperty("Active_users", activeUsersFormated);
 
             try (BufferedWriter filePrinter = new BufferedWriter(new FileWriter(buildFileName(id), true))) {
                 System.out.println("Got a client " + id);
@@ -33,10 +51,7 @@ public class WorkerTask implements Runnable {
                 String line;
                 while (true) {
                     line = in.readLine();
-                    if (line == null) {
-                        System.out.println("Socket " + id + " is closed");
-                        throw new IOException();
-                    }
+
                     System.out.println("Entering client(" + id + ") line to the file ");
                     filePrinter.write(line + "\n");
                     filePrinter.flush();
@@ -47,6 +62,8 @@ public class WorkerTask implements Runnable {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Hacker_Exception e) {
+            e.printStackTrace();
         } finally {
             try {
                 socket.close();
@@ -56,7 +73,17 @@ public class WorkerTask implements Runnable {
         }
     }
 
-    private static String buildFileName(int id) {
+    private static long getId(){
+        String counter = propertyManager.getProperty("Counter");
+        return Long.parseLong(counter);
+    }
+
+    private static void updateId(long newId){
+        propertyManager.setProperty("Counter", String.valueOf(newId));
+    }
+
+
+    private static String buildFileName(long id) {
         return "file " + id + ".txt";
     }
 
