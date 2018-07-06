@@ -89,8 +89,6 @@ public class CommunicationTask implements Runnable {
                 user_id = Integer.parseInt(inputStream.readLine());
             }
 
-            System.out.println(user_id);
-
             content.setStatusLabel("Connected, waiting for text");
             content.setSendButtonEnabled(true);
         } catch (UnknownHostException e) {
