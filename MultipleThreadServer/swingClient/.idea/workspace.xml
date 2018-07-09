@@ -2,14 +2,54 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ff3a871e-83cc-45ae-a5b9-d4532d1b709e" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/../Server/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/com/epam/socket/client/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/.idea/description.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/.idea/project-template.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/RMIClient.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/out/production/RMIClient/com/company/Client.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/out/production/RMIClient/com/company/Content$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/out/production/RMIClient/com/company/Content$ConnectButtonActionListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/out/production/RMIClient/com/company/Content$ContentBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/out/production/RMIClient/com/company/Content.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/out/production/RMIClient/com/company/Frame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/out/production/RMIClient/com/company/RemoteFileWriter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/src/com/company/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/src/com/company/ComunicationPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/src/com/company/ConnectPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/src/com/company/Content.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/src/com/company/Frame.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/src/com/company/RemoteFileWriter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../RMI2/RMIServer2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/RMIServer2.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 2819.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 3019.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 4926.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 6660.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 696.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 7380.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 7607.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 844.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 9347.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 9446.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/out/production/RMIServer2/com/company/RemoteFileWriter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/out/production/RMIServer2/com/company/Server.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/src/com/company/RemoteFileWriter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/src/com/company/Server.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/main/java/com/epam/socket/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/main/java/com/epam/socket/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/main/java/com/epam/socket/WorkerTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/main/java/com/epam/socket/WorkerTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/resources/server_info.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/resources/server_info.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../RMI/RMIClient2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../RMI/RMIClient2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../RMI/RMIClient2/src/main/java/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../RMI/RMIClient2/src/main/java/com/company/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -25,7 +65,7 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
+            <state relative-caret-position="119">
               <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -37,8 +77,8 @@
       <file leaf-file-name="Window.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/Window.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="23" column="1" selection-start-line="2" selection-end-line="23" selection-end-column="1" />
+            <state relative-caret-position="68">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -46,11 +86,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Content.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Content.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/Content.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-9">
-              <caret line="36" column="27" lean-forward="true" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
+            <state relative-caret-position="343">
+              <caret line="24" column="51" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1545#1546#0" expanded="true" />
@@ -63,8 +103,8 @@
       <file leaf-file-name="ConnectPanel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/ConnectPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1564">
-              <caret line="100" column="37" selection-start-line="100" selection-start-column="37" selection-end-line="100" selection-end-column="37" />
+            <state relative-caret-position="238">
+              <caret line="14" column="42" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -72,11 +112,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CommunicationTask.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CommunicationTask.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/CommunicationTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="90" column="13" lean-forward="true" selection-start-line="90" selection-start-column="13" selection-end-line="90" selection-end-column="13" />
+            <state relative-caret-position="1581">
+              <caret line="110" column="1" selection-start-line="110" selection-start-column="1" selection-end-line="110" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -343,7 +383,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="bottom" id="TODO" order="10" />
@@ -358,7 +397,7 @@
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="0" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.49918962" visible="true" weight="0.22814499" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.49918962" weight="0.22814499" />
       <window_info id="Structure" order="6" sideWeight="0.5008104" side_tool="true" weight="0.23081024" />
       <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
       <window_info id="UI Designer" order="1" />
@@ -372,6 +411,34 @@
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.32897604" />
     </layout>
+    <layout-to-restore>
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="bottom" id="Find" order="5" weight="0.32897604" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
+      <window_info anchor="right" id="Capture Analysis" order="0" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.3278867" />
+      <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
+      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.49918962" visible="true" weight="0.22814499" />
+      <window_info id="Structure" order="6" sideWeight="0.5008104" side_tool="true" weight="0.23081024" />
+      <window_info anchor="right" id="Theme Preview" order="2" />
+      <window_info anchor="bottom" id="TODO" order="10" />
+      <window_info anchor="bottom" id="Message" order="4" />
+      <window_info id="Image Layers" order="4" />
+      <window_info id="Designer" order="0" />
+      <window_info id="UI Designer" order="1" />
+      <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
+      <window_info anchor="right" id="Palette&#9;" order="1" />
+      <window_info anchor="bottom" id="Terminal" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" weight="0.32897604" />
+      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
+      <window_info anchor="bottom" id="Version Control" order="2" weight="0.24400872" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="5" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Messages" order="3" weight="0.32897604" />
+      <window_info anchor="right" id="Maven Projects" order="3" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -654,26 +721,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/Window.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="23" column="1" selection-start-line="2" selection-end-line="23" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/ConnectPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1564">
-          <caret line="100" column="37" selection-start-line="100" selection-start-column="37" selection-end-line="100" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/ComunicationPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -684,10 +731,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/CommunicationTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1581">
+          <caret line="110" column="1" selection-start-line="110" selection-start-column="1" selection-end-line="110" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
+        <state relative-caret-position="119">
           <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/Window.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/ConnectPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="42" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -696,22 +773,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/Content.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
-          <caret line="36" column="27" lean-forward="true" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
+        <state relative-caret-position="343">
+          <caret line="24" column="51" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1545#1546#0" expanded="true" />
             <element signature="e#1618#1619#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/CommunicationTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="90" column="13" lean-forward="true" selection-start-line="90" selection-start-column="13" selection-end-line="90" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
