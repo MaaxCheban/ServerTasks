@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ff3a871e-83cc-45ae-a5b9-d4532d1b709e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/../Server/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/main/java/com/epam/socket/HackerException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/main/java/com/epam/socket/HackerException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/main/java/com/epam/socket/PropertyManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/main/java/com/epam/socket/PropertyManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/main/java/com/epam/socket/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/main/java/com/epam/socket/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/main/java/com/epam/socket/WorkerTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/main/java/com/epam/socket/WorkerTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="ff3a871e-83cc-45ae-a5b9-d4532d1b709e" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,8 +40,8 @@
       <file leaf-file-name="Content.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/Content.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-213">
-              <caret line="24" column="51" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
+            <state relative-caret-position="731">
+              <caret line="43" column="22" lean-forward="true" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1545#1546#0" expanded="true" />
@@ -353,11 +345,11 @@
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" weight="0.32897604" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Version Control" order="2" weight="0.24400872" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.3278867" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.3278867" />
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="0" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.49918962" weight="0.22814499" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.49918962" visible="true" weight="0.22814499" />
       <window_info id="Structure" order="6" sideWeight="0.5008104" side_tool="true" weight="0.23081024" />
       <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
       <window_info id="UI Designer" order="1" />
@@ -376,10 +368,10 @@
       <window_info anchor="bottom" id="Find" order="5" weight="0.32897604" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
-      <window_info anchor="bottom" id="Run" order="6" weight="0.3278867" />
+      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.3278867" />
       <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.49918962" visible="true" weight="0.22814499" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.49918962" weight="0.22814499" />
       <window_info id="Structure" order="6" sideWeight="0.5008104" side_tool="true" weight="0.23081024" />
       <window_info anchor="right" id="Theme Preview" order="2" />
       <window_info anchor="bottom" id="TODO" order="10" />
@@ -733,8 +725,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/swing/Content.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-213">
-          <caret line="24" column="51" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
+        <state relative-caret-position="731">
+          <caret line="43" column="22" lean-forward="true" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1545#1546#0" expanded="true" />
