@@ -1,56 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bdd68f61-8f67-4015-a3d1-2251e62a0074" name="Default" comment="after review fixes">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/com/epam/socket/client/Client.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/.idea/description.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/.idea/project-template.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/RMIClient.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/out/production/RMIClient/com/company/Client.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/out/production/RMIClient/com/company/Content$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/out/production/RMIClient/com/company/Content$ConnectButtonActionListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/out/production/RMIClient/com/company/Content$ContentBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/out/production/RMIClient/com/company/Content.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/out/production/RMIClient/com/company/Frame.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/out/production/RMIClient/com/company/RemoteFileWriter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/src/com/company/Client.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/src/com/company/ComunicationPanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/src/com/company/ConnectPanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/src/com/company/Content.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/src/com/company/Frame.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIClient/src/com/company/RemoteFileWriter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../RMI2/RMIServer2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/RMIServer2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 2819.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 3019.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 4926.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 6660.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 696.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 7380.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 7607.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 844.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 9347.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/file 9446.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/out/production/RMIServer2/com/company/RemoteFileWriter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/out/production/RMIServer2/com/company/Server.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/src/com/company/RemoteFileWriter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RMI2/RMIServer2/src/com/company/Server.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../swingClient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../swingClient/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../RMI/RMIClient2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../RMI/RMIClient2/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="bdd68f61-8f67-4015-a3d1-2251e62a0074" name="Default" comment="after review fixes" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -345,11 +296,19 @@
       <option name="project" value="LOCAL" />
       <updated>1531143562080</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="after review fixes">
+      <created>1531143812356</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1531143812356</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
