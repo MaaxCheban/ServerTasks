@@ -8,9 +8,9 @@ import java.util.*;
 public class WorkerTask implements Runnable {
     private static final int UNINITIALIZED = -1;
     private final Socket socket;
-    private static PropertyManager propertyManager;
+    private final PropertyManager propertyManager;
 
-    public WorkerTask(Socket socket, PropertyManager propertyManager) throws FileNotFoundException {
+    public WorkerTask(Socket socket, PropertyManager propertyManager) {
         this.socket = socket;
         this.propertyManager = propertyManager;
     }
@@ -34,9 +34,9 @@ public class WorkerTask implements Runnable {
                 updateId(id + 1);
             }
 
-            propertyManager.addValueToList("Active_users", String.valueOf(id)); // Hacker Exception is thrown when more than one unique user
+            propertyManager.addValueToList("active_users", String.valueOf(id)); // Hacker Exception is thrown when more than one unique user
 
-            try (BufferedWriter filePrinter = new BufferedWriter(new FileWriter(buildFileName(id), true))) {
+            try (BufferedWriter filePrinter = new BufferedWriter(new FileWriter(buildFileName(id)))) {
                 System.out.println("Got a client " + id);
                 System.out.println();
 
@@ -51,14 +51,12 @@ public class WorkerTask implements Runnable {
                 }
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Hacker_Exception e) {
+        } catch (IOException | Hacker_Exception e) {
             e.printStackTrace();
         } finally {
             try {
-                if(id != UNINITIALIZED){
-                    propertyManager.removeValueFromList("Active_users", String.valueOf(id));
+                if (id != UNINITIALIZED) {
+                    propertyManager.removeProperty("active_users", String.valueOf(id));
                 }
                 socket.close();
             } catch (IOException e) {
@@ -67,18 +65,16 @@ public class WorkerTask implements Runnable {
         }
     }
 
-    private static long getId() {
-        String counter = propertyManager.getProperty("Counter");
+    private long getId() {
+        String counter = propertyManager.getProperty("counter");
         return Long.parseLong(counter);
     }
 
-    private static void updateId(long newId) {
-        propertyManager.setProperty("Counter", String.valueOf(newId));
+    private void updateId(long newId) {
+        propertyManager.setProperty("counter", String.valueOf(newId));
     }
-
 
     private static String buildFileName(long id) {
         return "file " + id + ".txt";
     }
-
 }

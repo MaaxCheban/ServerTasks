@@ -1,97 +1,82 @@
 package com.epam.socket;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class PropertyManager {
     private final String propertyFileName;
-    private FileInputStream in;
-    private FileOutputStream out;
-    private Properties properties;
+    private final Properties properties;
 
     public PropertyManager(String propertyFileName){
-
         this.propertyFileName = propertyFileName;
+
+        File propFile = new File(propertyFileName);
+
         properties = new Properties();
+        if(propFile.exists() && !propFile.isDirectory()){
+            if(getProperty("counter") == null){
+                setProperty("counter", "0");
+            }
 
-    }
+            if(getProperty("active_users") == null){
+                setProperty("active_users", "");
+            }else{
+                setProperty("active_users", "");
+            }
 
-    public InputStream getInputStream(){
-        return in;
-    }
-
-    public FileOutputStream getOutputStream(){
-        return out;
+        }else{
+            try {
+                propFile.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            setProperty("active_users", "");
+            setProperty("counter", "0");
+        }
     }
 
     public synchronized String getProperty(String key){
-        try {
-            in = new FileInputStream(propertyFileName);
+        try(FileInputStream in = new FileInputStream(propertyFileName)){
             properties.load(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
+            return properties.getProperty(key);
+        }catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        String result = properties.getProperty(key);
-
-        try {
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-
-        return result;
     }
 
     public synchronized void setProperty(String key, String val){
-        try {
-            out = new FileOutputStream(propertyFileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-
-        properties.setProperty(key, val);
-
-        try {
+        try(FileOutputStream out = new FileOutputStream(propertyFileName)){
+            properties.setProperty(key, val);
             properties.store(out, null);
-            out.close();
-        } catch (IOException e) {
+        }catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
     public synchronized void addValueToList(String key, String val) throws Hacker_Exception {
         List<String> values;
 
-        if(getProperty(key).length() == 0){
+        if(getProperty(key).isEmpty()){
             setProperty(key, val);
             return;
-        }else{
-            values = new ArrayList<>(Arrays.asList(getProperty(key).split(",")));
         }
 
-        if(values.indexOf(val) != - 1){
+        values = new ArrayList<>(Arrays.asList(getProperty(key).split(",")));
+
+        if(values.contains(val)){
             throw new Hacker_Exception();
         }
 
         values.add(val);
-        if(values.size() == 1){
-            setProperty(key, values.get(0));
-        }else{
-            setProperty(key, String.join(",", values));
-        }
+
+
+        setProperty(key, String.join(",", values));
     }
 
-    public synchronized void removeValueFromList(String key, String val){
+    public synchronized void removeProperty(String key, String val) {
         List<String> values = new ArrayList<>(Arrays.asList(getProperty(key).split(",")));
         values.remove(val);
         setProperty(key, String.join(",", values));
     }
-
 }
