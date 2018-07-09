@@ -1,16 +1,8 @@
 package com.epam.socket;
 
-import java.io.*;
 import java.net.*;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Server {
     private static final int PORT = 8080;
@@ -18,6 +10,7 @@ public class Server {
     private PropertyManager propertyManager;
     public Server(){
         propertyManager = new PropertyManager(PROPERTY_FILE_NAME);
+        propertyManager.setProperty("Active_users", "");
     }
 
     public static void main(String[] args)    {

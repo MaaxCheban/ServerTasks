@@ -9,9 +9,9 @@ public class Main {
         try {
             SwingUtilities.invokeAndWait(() -> {
                 ConnectPanel connectPanel= new ConnectPanel.ConnectPanelBuilder().build();
-                CommunicationPanel comunicationPanel= new CommunicationPanel.CommunicationPanelBuilder().build();
+                CommunicationPanel communicationPanel= new CommunicationPanel.CommunicationPanelBuilder().build();
 
-                Content content = new Content(connectPanel, comunicationPanel);
+                Content content = new Content(connectPanel, communicationPanel);
                 Window window = new Window(content);
                 window.setVisible(true);
             });

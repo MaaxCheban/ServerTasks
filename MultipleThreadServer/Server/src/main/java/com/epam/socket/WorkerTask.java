@@ -76,6 +76,7 @@ public class WorkerTask implements Runnable {
         propertyManager.setProperty("Counter", String.valueOf(newId));
     }
 
+
     private static String buildFileName(long id) {
         return "file " + id + ".txt";
     }
