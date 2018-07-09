@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 
 public class Server {
     private static final int PORT = 8080;
-    private static final String PROPERTY_FILE_NAME = "src/resources/server_info.properties";
+    private static final String PROPERTY_FILE_NAME = "server_info.properties";
     private final PropertyManager propertyManager;
 
     public Server(String propertyFileName) {
@@ -19,7 +19,7 @@ public class Server {
         String propertyFileName = PROPERTY_FILE_NAME;
         if (args.length != 0) {
             port = Integer.parseInt(args[0]);
-            if(args.length == 2){
+            if (args.length == 2) {
                 propertyFileName = args[1];
             }
         }

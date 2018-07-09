@@ -25,7 +25,7 @@ public class WorkerTask implements Runnable {
             id = Long.parseLong(in.readLine());
 
             if (id > getId()) {
-                throw new Hacker_Exception();
+                throw new HackerException();
             }
 
             if (id == UNINITIALIZED) {
@@ -51,12 +51,12 @@ public class WorkerTask implements Runnable {
                 }
             }
 
-        } catch (IOException | Hacker_Exception e) {
+        } catch (IOException | HackerException e) {
             e.printStackTrace();
         } finally {
             try {
                 if (id != UNINITIALIZED) {
-                    propertyManager.removeProperty("active_users", String.valueOf(id));
+                    propertyManager.removeValueFromList("active_users", String.valueOf(id));
                 }
                 socket.close();
             } catch (IOException e) {

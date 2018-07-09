@@ -1,13 +1,10 @@
 package com.epam.socket;
 
-public class Hacker_Exception extends Exception {
-
-    public Hacker_Exception(){
-
+public class HackerException extends Exception {
+    public HackerException() {
     }
 
-    public Hacker_Exception(String message){
+    public HackerException(String message) {
         super(message);
     }
-
 }
