@@ -36,10 +36,6 @@ public class WorkerTask implements Runnable {
 
             propertyManager.addValueToList("Active_users", String.valueOf(id)); // Hacker Exception is thrown when more than one unique user
 
-            System.out.println(propertyManager.getProperty("Active_users"));
-
-            System.out.println();
-
             try (BufferedWriter filePrinter = new BufferedWriter(new FileWriter(buildFileName(id), true))) {
                 System.out.println("Got a client " + id);
                 System.out.println();
@@ -79,7 +75,6 @@ public class WorkerTask implements Runnable {
     private static void updateId(long newId) {
         propertyManager.setProperty("Counter", String.valueOf(newId));
     }
-
 
     private static String buildFileName(long id) {
         return "file " + id + ".txt";
