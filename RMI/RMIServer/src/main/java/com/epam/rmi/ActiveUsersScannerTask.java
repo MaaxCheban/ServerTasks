@@ -27,7 +27,6 @@ public class ActiveUsersScannerTask implements Runnable {
     @Override
     public void run() {
         mustRun = true;
-        System.out.println("Started");
         while(mustRun){
             activeUsers.entrySet().removeIf(entry -> MINUTES.between(entry.getValue(), LocalTime.now()) > 5);
         }

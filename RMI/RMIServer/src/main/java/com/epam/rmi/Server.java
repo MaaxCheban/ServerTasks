@@ -12,26 +12,26 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-public class Server implements RemoteFileWriter{
+public class Server implements RemoteFileWriter {
     private static final long UNINITIALIZED_USER = -1;
-     private final static int REGISTRY_PORT = 1099;
-     private final static int REMOTE_OBJECT_CONNECTION_PORT = 0;
-     private ActiveUsersScannerTask activeUsersScannerTask;
-     private long clientsCounter = 25;
-     private final ConcurrentMap<Long, LocalTime> activeUsers;
+    private final static int REGISTRY_PORT = 1099;
+    private final static int REMOTE_OBJECT_CONNECTION_PORT = 0;
+    private ActiveUsersScannerTask activeUsersScannerTask;
+    private long clientsCounter = 25;
+    private final ConcurrentMap<Long, LocalTime> activeUsers;
 
-     public Server(){
-         activeUsers = new ConcurrentHashMap<>();
-         activeUsersScannerTask = new ActiveUsersScannerTask(activeUsers);
-     }
+    public Server() {
+        activeUsers = new ConcurrentHashMap<>();
+        activeUsersScannerTask = new ActiveUsersScannerTask(activeUsers);
+    }
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
         int registryPort = REGISTRY_PORT;
         int remoteObjectConnectionPort = REMOTE_OBJECT_CONNECTION_PORT;
 
-        if(args.length == 1){
+        if (args.length == 1) {
             registryPort = Integer.parseInt(args[0]);
-        }else if(args.length == 2){
+        } else if (args.length == 2) {
             registryPort = Integer.parseInt(args[0]);
             remoteObjectConnectionPort = Integer.parseInt(args[1]);
         }
@@ -40,8 +40,8 @@ public class Server implements RemoteFileWriter{
         server.start(registryPort, remoteObjectConnectionPort);
     }
 
-    public void start(int registryPort, int remoteObjectConnectionPort){
-        try{
+    public void start(int registryPort, int remoteObjectConnectionPort) {
+        try {
             RemoteFileWriter stub = (RemoteFileWriter) UnicastRemoteObject.exportObject(this, remoteObjectConnectionPort);
 
             Registry registry = LocateRegistry.createRegistry(registryPort);
@@ -56,35 +56,22 @@ public class Server implements RemoteFileWriter{
         }
     }
 
-    private void addActiveUser(Long id){
-        id = clientsCounter++;
-        System.out.println("Given id " + id);
-        activeUsers.put(id, LocalTime.now());
-    }
-
     public long write(OutputData outputData, long id) {
-        if(id == UNINITIALIZED_USER){
-            System.out.println("Got uninitialized client");
-            id = clientsCounter++;
-            System.out.println("Given id " + id);
-            activeUsers.put(id, LocalTime.now());
-        }else if(!activeUsers.containsKey(id)){
-            System.out.println("User " + id + " is no longer active, and is given new id");
-            id = clientsCounter++;
-            System.out.println("Given id " + id);
+        if (id == UNINITIALIZED_USER) {
+            System.out.println("Got uninitialized client or user is no longer active");
 
+            id = new Long(clientsCounter++);
+            System.out.println("Given id " + id);
             activeUsers.put(id, LocalTime.now());
-        }else if(activeUsers.containsKey(id)){
+        } else if (activeUsers.containsKey(id)) {
             activeUsers.replace(id, LocalTime.now());
         }
-
-        activeUsers.entrySet().forEach(System.out::println);
 
         System.out.println("Client (" + id + ") has written " + outputData.getText() + " at " + outputData.getLocalDateTime());
 
         File file = new File(buildFileName(id));
 
-        if(!file.exists()){
+        if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -98,7 +85,7 @@ public class Server implements RemoteFileWriter{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println("returning id " + id );
+
         return id;
     }
 
