@@ -63,7 +63,7 @@ public class CommunicationTask implements Runnable {
                 try {
                     content.setSendButtonEnabled(false);
 
-                    userId = stub.write(new OutputData(text, LocalDateTime.now()), userId);
+                    stub.write(new OutputData(text, LocalDateTime.now()), userId);
 
                     content.setSendButtonEnabled(true);
                 } catch (RemoteException e) {
