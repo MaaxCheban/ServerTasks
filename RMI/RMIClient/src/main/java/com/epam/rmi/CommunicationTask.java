@@ -63,9 +63,7 @@ public class CommunicationTask implements Runnable {
                 try {
                     content.setSendButtonEnabled(false);
 
-                    userId = stub.write(new OutputData(text,  LocalDateTime.now()), userId);
-
-                    System.out.println(userId);
+                    userId = stub.write(new OutputData(text, LocalDateTime.now()), userId);
 
                     content.setSendButtonEnabled(true);
                 } catch (RemoteException e) {
@@ -84,6 +82,8 @@ public class CommunicationTask implements Runnable {
         Registry registry = LocateRegistry.getRegistry(host, port);
 
         stub = (RemoteFileWriter) registry.lookup(REMOTE_OBJECT_NAME);
+
+        userId = stub.init();
 
         content.setStatusLabel("Connected, waiting for text");
 
