@@ -4,11 +4,26 @@ import java.io.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class Server implements RemoteFileWriter{
+    private static final long UNINITIALIZED_USER = -1;
      private final static int REGISTRY_PORT = 1099;
      private final static int REMOTE_OBJECT_CONNECTION_PORT = 0;
+     private ActiveUsersScannerTask activeUsersScannerTask;
+     private long clientsCounter = 25;
+     private final ConcurrentMap<Long, LocalTime> activeUsers;
+
+     public Server(){
+         activeUsers = new ConcurrentHashMap<>();
+         activeUsersScannerTask = new ActiveUsersScannerTask(activeUsers);
+     }
 
     public static void main(String args[]){
         int registryPort = REGISTRY_PORT;
@@ -33,14 +48,39 @@ public class Server implements RemoteFileWriter{
 
             registry.bind("RemoteFileWriter", stub);
 
+            activeUsersScannerTask.start();
+
             System.out.println("Server ready");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void write(String text, LocalDateTime localDateTime, long id) {
-        System.out.println("Client (" + id +") has written " + text + " at " + localDateTime);
+    private void addActiveUser(Long id){
+        id = clientsCounter++;
+        System.out.println("Given id " + id);
+        activeUsers.put(id, LocalTime.now());
+    }
+
+    public long write(OutputData outputData, long id) {
+        if(id == UNINITIALIZED_USER){
+            System.out.println("Got uninitialized client");
+            id = clientsCounter++;
+            System.out.println("Given id " + id);
+            activeUsers.put(id, LocalTime.now());
+        }else if(!activeUsers.containsKey(id)){
+            System.out.println("User " + id + " is no longer active, and is given new id");
+            id = clientsCounter++;
+            System.out.println("Given id " + id);
+
+            activeUsers.put(id, LocalTime.now());
+        }else if(activeUsers.containsKey(id)){
+            activeUsers.replace(id, LocalTime.now());
+        }
+
+        activeUsers.entrySet().forEach(System.out::println);
+
+        System.out.println("Client (" + id + ") has written " + outputData.getText() + " at " + outputData.getLocalDateTime());
 
         File file = new File(buildFileName(id));
 
@@ -54,10 +94,12 @@ public class Server implements RemoteFileWriter{
         }
 
         try (PrintStream outputStream = new PrintStream(new FileOutputStream(file, true))) {
-            outputStream.println(text + " " + localDateTime);
+            outputStream.println(outputData.getText() + " " + outputData.getLocalDateTime());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        System.out.println("returning id " + id );
+        return id;
     }
 
     private static String buildFileName(long id) {
