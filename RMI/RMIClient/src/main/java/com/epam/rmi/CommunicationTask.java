@@ -1,21 +1,19 @@
 package com.epam.rmi;
 
-import java.io.*;
-import java.net.ConnectException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
-import java.rmi.AccessException;
 import java.rmi.AlreadyBoundException;
+import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDateTime;
-import java.util.Random;
 import java.util.concurrent.*;
 
 public class CommunicationTask implements Runnable {
+    private final static int REGISTRY_PORT = 1098;
+    private final static int REMOTE_OBJECT_CONNECTION_PORT = 0;
+    private static final long UNINITIALIZED = -1;
     private static final int DELAY_RECONNECTION_TIME = 700;
     private static final int COUNT_OF_THREADS = 1;
     public static final String REMOTE_OBJECT_NAME = "RemoteFileWriter";
@@ -24,9 +22,8 @@ public class CommunicationTask implements Runnable {
     private final int port;
     private final BlockingQueue<String> blockingQueue;
     private final Content content;
-    private final long userId;
+    private long userId = UNINITIALIZED;
     private RemoteFileWriter stub;
-    private Registry registry;
 
     public CommunicationTask(String host, int port, Content content) {
         this.host = host;
@@ -34,7 +31,6 @@ public class CommunicationTask implements Runnable {
         this.blockingQueue = content.getBlockingQueue();
         this.content = content;
 
-        userId = new Random().nextInt(10000);
         executor = Executors.newFixedThreadPool(COUNT_OF_THREADS);
     }
 
@@ -66,7 +62,10 @@ public class CommunicationTask implements Runnable {
 
                 try {
                     content.setSendButtonEnabled(false);
-                    stub.write(text, LocalDateTime.now(), userId);
+
+                    userId = stub.write(new OutputData(text,  LocalDateTime.now()), userId);
+
+                    System.out.println(userId);
 
                     content.setSendButtonEnabled(true);
                 } catch (RemoteException e) {
@@ -82,7 +81,7 @@ public class CommunicationTask implements Runnable {
     private void connect() throws RemoteException, NotBoundException {
         content.setConnectButtonEnabled(false);
 
-        registry = LocateRegistry.getRegistry(host, port);
+        Registry registry = LocateRegistry.getRegistry(host, port);
 
         stub = (RemoteFileWriter) registry.lookup(REMOTE_OBJECT_NAME);
 
@@ -111,4 +110,5 @@ public class CommunicationTask implements Runnable {
 
         throw new RemoteException();
     }
+
 }

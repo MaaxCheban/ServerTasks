@@ -75,5 +75,4 @@ public class CommunicationPanel extends JPanel {
     public void setParentContentContainer(Content parentContentContainer) {
         this.parentContentContainer = parentContentContainer;
     }
-
 }

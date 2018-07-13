@@ -54,7 +54,6 @@ public class ConnectPanel extends JPanel {
                 throw new UnsupportedOperationException("Content is not defined");
             }
 
-
             CommunicationTask communicationTask = new CommunicationTask(hostField.getText(), Integer.parseInt(portField.getText()), parentContentContainer);
             communicationTask.start();
         }
