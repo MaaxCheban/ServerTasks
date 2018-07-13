@@ -1,14 +1,11 @@
 package com.epam.rmi;
 
 import java.io.*;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -57,13 +54,13 @@ public class Server implements RemoteFileWriter {
     }
 
     public long write(OutputData outputData, long id) {
-        if (id == UNINITIALIZED_USER) {
-            System.out.println("Got uninitialized client or user is no longer active");
+        if (!activeUsers.containsKey(id)) {
+            System.out.println("User is no longer active");
 
-            id = new Long(clientsCounter++);
+            id = clientsCounter++;
             System.out.println("Given id " + id);
             activeUsers.put(id, LocalTime.now());
-        } else if (activeUsers.containsKey(id)) {
+        } else {
             activeUsers.replace(id, LocalTime.now());
         }
 
@@ -87,6 +84,11 @@ public class Server implements RemoteFileWriter {
         }
 
         return id;
+    }
+
+    @Override
+    public long init() throws RemoteException {
+        return clientsCounter++;
     }
 
     private static String buildFileName(long id) {

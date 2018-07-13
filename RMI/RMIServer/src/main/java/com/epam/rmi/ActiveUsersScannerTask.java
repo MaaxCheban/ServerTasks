@@ -9,7 +9,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 public class ActiveUsersScannerTask implements Runnable {
     private final ConcurrentMap<Long, LocalTime> activeUsers;
     private final Executor executor;
-    private boolean mustRun = false;
+    private volatile boolean mustRun = false;
 
     public ActiveUsersScannerTask( ConcurrentMap<Long, LocalTime> usersConnectTime){
         this.activeUsers = usersConnectTime;
@@ -29,6 +29,12 @@ public class ActiveUsersScannerTask implements Runnable {
         mustRun = true;
         while(mustRun){
             activeUsers.entrySet().removeIf(entry -> MINUTES.between(entry.getValue(), LocalTime.now()) > 5);
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
         }
     }
 }
