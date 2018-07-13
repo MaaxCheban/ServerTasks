@@ -53,16 +53,14 @@ public class Server implements RemoteFileWriter {
         }
     }
 
-    public long write(OutputData outputData, long id) {
+    public void write(OutputData outputData, long id) {
         if (!activeUsers.containsKey(id)) {
-            System.out.println("User is no longer active");
+            System.out.println("User have to reconnect");
+            return;
 
-            id = clientsCounter++;
-            System.out.println("Given id " + id);
-            activeUsers.put(id, LocalTime.now());
-        } else {
-            activeUsers.replace(id, LocalTime.now());
         }
+
+        activeUsers.replace(id, LocalTime.now());
 
         System.out.println("Client (" + id + ") has written " + outputData.getText() + " at " + outputData.getLocalDateTime());
 
@@ -83,12 +81,13 @@ public class Server implements RemoteFileWriter {
             e.printStackTrace();
         }
 
-        return id;
     }
 
     @Override
     public long init() throws RemoteException {
-        return clientsCounter++;
+        long id = clientsCounter++;
+        activeUsers.put(id, LocalTime.now());
+        return id;
     }
 
     private static String buildFileName(long id) {
